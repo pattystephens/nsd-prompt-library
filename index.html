@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NSD Engaging Math Activities — AI Prompt Library</title>
+<title>NSD Math Toolbox — AI Prompt Libraries</title>
 <style>
   :root {
     --teal:       #025E73;
@@ -18,623 +18,88 @@
     --white:      #FFFFFF;
     --off-white:  #F4F9FA;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    background: var(--off-white);
-    color: var(--charcoal);
-    min-height: 100vh;
-  }
-
-  /* ── HEADER ── */
-  header {
-    background: var(--teal);
-    padding: 2rem 2.5rem 1.5rem;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
-  }
-  header h1 {
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 1.6rem;
-    color: var(--white);
-    letter-spacing: -0.01em;
-  }
-  header p {
-    font-size: 0.85rem;
-    color: var(--teal-light);
-    margin-top: 0.3rem;
-  }
-  .header-tag {
-    display: inline-block;
-    background: var(--gold);
-    color: var(--charcoal);
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 0.2rem 0.65rem;
-    border-radius: 99px;
-    margin-bottom: 0.5rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
-  /* ── GLOBAL FIELDS BANNER ── */
-  .global-fields {
-    background: var(--gold-light);
-    border-bottom: 2px solid var(--gold);
-    padding: 1rem 2.5rem;
-  }
-  .global-fields h2 {
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--teal);
-    margin-bottom: 0.6rem;
-  }
-  .global-fields-row {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    align-items: flex-end;
-  }
-  .field-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    flex: 1;
-    min-width: 160px;
-  }
-  .field-group label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--gray);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  .field-group input {
-    border: 1.5px solid var(--light-gray);
-    border-radius: 6px;
-    padding: 0.45rem 0.7rem;
-    font-size: 0.9rem;
-    color: var(--charcoal);
-    background: var(--white);
-    transition: border-color 0.15s;
-    font-family: inherit;
-  }
-  .field-group input:focus {
-    outline: none;
-    border-color: var(--teal);
-  }
-  .apply-btn {
-    background: var(--teal);
-    color: var(--white);
-    border: none;
-    border-radius: 6px;
-    padding: 0.5rem 1.2rem;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: inherit;
-    transition: background 0.15s;
-    white-space: nowrap;
-    align-self: flex-end;
-  }
-  .apply-btn:hover { background: var(--teal-mid); }
-  .clear-btn {
-    background: transparent;
-    color: var(--gray);
-    border: 1.5px solid var(--light-gray);
-    border-radius: 6px;
-    padding: 0.5rem 1rem;
-    font-size: 0.85rem;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all 0.15s;
-    align-self: flex-end;
-  }
-  .clear-btn:hover { border-color: var(--gray); color: var(--charcoal); }
-
-  /* ── MAIN LAYOUT ── */
-  main {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-  }
-
-  /* ── GROUP SECTION ── */
-  .group {
-    margin-bottom: 2.5rem;
-  }
-  .group-header {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.6rem;
-    border-bottom: 2px solid var(--teal-light);
-  }
-  .group-number {
-    background: var(--teal);
-    color: var(--white);
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 0.2rem 0.6rem;
-    border-radius: 99px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    white-space: nowrap;
-  }
-  .group-title {
-    font-family: Georgia, serif;
-    font-size: 1.1rem;
-    color: var(--teal);
-    font-weight: 700;
-  }
-
-  /* ── ACTIVITY CARD ── */
-  .card {
-    background: var(--white);
-    border-radius: 10px;
-    border: 1px solid var(--light-gray);
-    margin-bottom: 1rem;
-    overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    transition: box-shadow 0.15s;
-  }
-  .card:hover { box-shadow: 0 3px 12px rgba(2,94,115,0.1); }
-
-  .card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.9rem 1.2rem;
-    cursor: pointer;
-    user-select: none;
-    gap: 1rem;
-  }
-  .card-header-left {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-  .activity-name {
-    font-weight: 700;
-    font-size: 0.97rem;
-    color: var(--charcoal);
-  }
-  .purpose-tag {
-    background: var(--teal-bg);
-    color: var(--teal);
-    font-size: 0.7rem;
-    font-weight: 600;
-    padding: 0.15rem 0.55rem;
-    border-radius: 99px;
-    letter-spacing: 0.03em;
-  }
-  .chevron {
-    color: var(--teal-light);
-    font-size: 1rem;
-    transition: transform 0.2s;
-    flex-shrink: 0;
-  }
-  .card.open .chevron { transform: rotate(180deg); }
-
-  .card-body {
-    display: none;
-    padding: 0 1.2rem 1.2rem;
-    border-top: 1px solid var(--light-gray);
-  }
-  .card.open .card-body { display: block; }
-
-  /* ── PROMPT AREA ── */
-  .prompt-label {
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--gray);
-    margin: 0.9rem 0 0.4rem;
-  }
-  .prompt-box {
-    background: var(--off-white);
-    border: 1.5px solid var(--light-gray);
-    border-radius: 8px;
-    padding: 0.9rem 1rem;
-    font-size: 0.88rem;
-    line-height: 1.65;
-    color: var(--charcoal);
-    white-space: pre-wrap;
-    word-break: break-word;
-  }
-  .prompt-box .filled-field {
-    background: var(--gold-light);
-    color: var(--teal);
-    font-weight: 600;
-    border-radius: 3px;
-    padding: 0 2px;
-  }
-  .prompt-box .empty-field {
-    background: #FFF0D6;
-    color: #B07000;
-    font-weight: 600;
-    border-radius: 3px;
-    padding: 0 2px;
-    border-bottom: 1.5px dashed var(--gold);
-  }
-  .copy-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    margin-top: 0.65rem;
-    background: var(--teal);
-    color: var(--white);
-    border: none;
-    border-radius: 6px;
-    padding: 0.5rem 1rem;
-    font-size: 0.82rem;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: inherit;
-    transition: background 0.15s;
-  }
-  .copy-btn:hover { background: var(--teal-mid); }
-  .copy-btn.copied { background: #2E7D32; }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--charcoal);
-    padding: 2rem 2.5rem;
-    margin-top: 2rem;
-  }
-  .footer-inner {
-    max-width: 960px;
-    margin: 0 auto;
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-  .footer-contact h3 {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--white);
-    margin-bottom: 0.3rem;
-  }
-  .footer-contact p {
-    font-size: 0.78rem;
-    color: var(--teal-light);
-    margin-bottom: 0.2rem;
-  }
-  .footer-contact a {
-    color: var(--gold);
-    text-decoration: none;
-  }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--off-white); color: var(--charcoal); min-height: 100vh; display: flex; flex-direction: column; }
+  header { background: var(--teal); padding: 2rem 2.5rem 1.5rem; box-shadow: 0 2px 12px rgba(0,0,0,0.18); border-top: 5px solid var(--gold); }
+  .header-tag { display: inline-block; background: var(--gold); color: var(--charcoal); font-size: 0.72rem; font-weight: 700; padding: 0.2rem 0.65rem; border-radius: 99px; margin-bottom: 0.6rem; letter-spacing: 0.04em; text-transform: uppercase; }
+  header h1 { font-family: Georgia, serif; font-size: 1.8rem; color: var(--white); margin-bottom: 0.35rem; }
+  header p { font-size: 0.9rem; color: var(--teal-light); max-width: 600px; line-height: 1.5; }
+  main { max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem; flex: 1; }
+  .section-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--gray); margin-bottom: 1rem; }
+  .libraries { display: flex; flex-direction: column; gap: 1rem; }
+  .library-card { background: var(--white); border-radius: 10px; border: 1px solid var(--light-gray); padding: 1.5rem 1.75rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; text-decoration: none; color: inherit; box-shadow: 0 1px 4px rgba(0,0,0,0.06); transition: box-shadow 0.15s, transform 0.1s; border-left: 5px solid var(--teal); }
+  .library-card:hover { box-shadow: 0 4px 16px rgba(2,94,115,0.12); transform: translateY(-1px); }
+  .library-card:nth-child(2) { border-left-color: var(--teal-mid); }
+  .card-content { flex: 1; }
+  .card-title { font-family: Georgia, serif; font-size: 1.15rem; font-weight: 700; color: var(--teal); margin-bottom: 0.3rem; }
+  .library-card:nth-child(2) .card-title { color: var(--teal-mid); }
+  .card-desc { font-size: 0.88rem; color: var(--gray); line-height: 1.5; }
+  .card-meta { display: flex; gap: 0.5rem; margin-top: 0.6rem; flex-wrap: wrap; }
+  .meta-pill { background: var(--teal-bg); color: var(--teal); font-size: 0.7rem; font-weight: 600; padding: 0.18rem 0.55rem; border-radius: 99px; letter-spacing: 0.03em; }
+  .card-arrow { font-size: 1.4rem; color: var(--teal-light); flex-shrink: 0; }
+  footer { background: var(--charcoal); padding: 1.5rem 2.5rem; display: flex; gap: 2rem; flex-wrap: wrap; justify-content: space-between; align-items: center; border-top: 3px solid var(--gold); }
+  .footer-contact h3 { font-size: 0.85rem; font-weight: 700; color: var(--white); margin-bottom: 0.2rem; }
+  .footer-contact p { font-size: 0.78rem; color: var(--teal-light); margin-bottom: 0.15rem; }
+  .footer-contact a { color: var(--gold); text-decoration: none; }
   .footer-contact a:hover { text-decoration: underline; }
-  .footer-divider {
-    width: 1px;
-    background: rgba(255,255,255,0.1);
-    align-self: stretch;
-  }
-  .footer-link-block h3 {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--white);
-    margin-bottom: 0.3rem;
-  }
-  .footer-link-block a {
-    display: inline-block;
-    font-size: 0.78rem;
-    color: var(--gold);
-    text-decoration: none;
-    margin-bottom: 0.2rem;
-  }
-  .footer-link-block a:hover { text-decoration: underline; }
-  .footer-copy {
-    width: 100%;
-    font-size: 0.72rem;
-    color: var(--gray);
-    margin-top: 1.25rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255,255,255,0.08);
-  }
-  .choice-field {
-    background: #EDE7F6;
-    color: #4A148C;
-    font-weight: 700;
-    border-radius: 3px;
-    padding: 0 3px;
-    border-bottom: 1.5px dashed #7B1FA2;
-  }
+  .footer-link a { font-size: 0.78rem; color: var(--gold); text-decoration: none; }
+  .footer-link a:hover { text-decoration: underline; }
+  .footer-copy { width: 100%; font-size: 0.72rem; color: var(--gray); padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.08); }
 </style>
 </head>
 <body>
 
 <header>
   <div class="header-tag">NSD Math Toolbox</div>
-  <h1>Engaging Math Activities — AI Prompt Library</h1>
-  <p>Fill in your details once below, then copy any prompt directly into your AI tool.</p>
+  <h1>AI Prompt Libraries</h1>
+  <p>Browse all available prompt libraries. Each library contains AI prompts purpose-built for NSD math activity templates.</p>
 </header>
 
-<div class="global-fields">
-  <h2>Fill in your details — prompts update automatically</h2>
-  <div class="global-fields-row">
-    <div class="field-group">
-      <label>Grade Level</label>
-      <input type="text" id="gradeLevel" placeholder="e.g. 7th grade" oninput="updatePrompts()">
-    </div>
-    <div class="field-group">
-      <label>Standard</label>
-      <input type="text" id="standard" placeholder="e.g. 7.RP.A.2" oninput="updatePrompts()">
-    </div>
-    <div class="field-group">
-      <label>Topic</label>
-      <input type="text" id="topic" placeholder="e.g. Proportional Relationships" oninput="updatePrompts()">
-    </div>
-    <div class="field-group">
-      <label>Curriculum</label>
-      <input type="text" id="curriculum" placeholder="e.g. Core Focus on Mathematics" oninput="updatePrompts()">
-    </div>
-    <button class="clear-btn" onclick="clearFields()">Clear</button>
-  </div>
-</div>
+<main>
+  <p class="section-label">Available Libraries</p>
+  <div class="libraries">
 
-<main id="main"></main>
+    <a class="library-card" href="engaging-math-activities.html">
+      <div class="card-content">
+        <div class="card-title">Engaging Math Activities</div>
+        <div class="card-desc">18 activity templates across 4 groups — Inquiry, Conceptual Depth, Differentiated Practice, and Fluency. Fill in your grade level, standard, topic, and curriculum once, then copy any prompt.</div>
+        <div class="card-meta">
+          <span class="meta-pill">18 templates</span>
+          <span class="meta-pill">Groups 1–4</span>
+          <span class="meta-pill">Fillable fields</span>
+        </div>
+      </div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="library-card" href="NSD_PromptLibrary_VersionB_CommunicationBreaks.html">
+      <div class="card-content">
+        <div class="card-title">Communication Breaks</div>
+        <div class="card-desc">Prompt library for Communication Break structures — designed to build mathematical discourse and student talk moves during instruction.</div>
+        <div class="card-meta">
+          <span class="meta-pill">Browse prompts</span>
+        </div>
+      </div>
+      <span class="card-arrow">→</span>
+    </a>
+
+  </div>
+</main>
 
 <footer>
-  <div class="footer-inner">
-    <div class="footer-contact">
-      <h3>Patty Stephens</h3>
-      <p>Secondary Math Curriculum Specialist — Northshore School District</p>
-      <p>Email: <a href="mailto:pstephens@nsd.org">pstephens@nsd.org</a></p>
-      <p>Phone: 425.408.7617</p>
-    </div>
-    <div class="footer-divider"></div>
-    <div class="footer-link-block">
-      <h3>Resources</h3>
-      <a href="https://sites.google.com/apps.nsd.org/nsdtoolboxes/general-education/math/pd-opportunities" target="_blank">NSD Math Toolbox — PD Opportunities →</a>
-    </div>
-    <div class="footer-copy">
-      Northshore School District · For internal use only · Not for distribution outside NSD
-    </div>
+  <div class="footer-contact">
+    <h3>Patty Stephens</h3>
+    <p>Secondary Math Curriculum Specialist — Northshore School District</p>
+    <p>Email: <a href="mailto:pstephens@nsd.org">pstephens@nsd.org</a></p>
+    <p>Phone: 425.408.7617</p>
+  </div>
+  <div class="footer-link">
+    <a href="https://sites.google.com/apps.nsd.org/nsdtoolboxes/general-education/math/pd-opportunities" target="_blank">NSD Math Toolbox — PD Opportunities →</a>
+  </div>
+  <div class="footer-copy">
+    Northshore School District · For internal use only · Not for distribution outside NSD
   </div>
 </footer>
 
-<script>
-const data = {
-  groups: [
-    {
-      number: "Group 1",
-      title: "Inquiry & Conceptual Openers",
-      activities: [
-        {
-          name: "Notice and Wonder",
-          purpose: "Inquiry",
-          prompt: `Act as an inquiry-based math coach with expertise in [Grade Level] mathematics. Suggest 3 highly visual or data-rich scenarios related to [Standard] that would work for a 'Notice and Wonder' launch in a [Curriculum] classroom. For each scenario: (1) describe the image or data to be shown in enough detail that a teacher could recreate or source it, (2) list 5 specific things students at this grade level are likely to 'Notice,' and (3) list 5 things students are likely to 'Wonder,' prioritizing wonders that naturally lead toward the target concept. Avoid scenarios that require prior knowledge beyond [Grade Level].`
-        },
-        {
-          name: "Which One Doesn't Belong? (WODB)",
-          purpose: "Inquiry",
-          prompt: `Act as an experienced [Grade Level] math teacher. Generate a 'Which One Doesn't Belong?' (WODB) set for [Standard] aligned to [Curriculum] vocabulary. Provide 4 distinct mathematical items (numbers, expressions, graphs, or equations). Requirements: (1) Every item must have at least one valid mathematical reason it could be the one that doesn't belong — confirm this before presenting your answer. (2) The reasons should span different mathematical properties (e.g., one structural, one numerical, one representational). (3) Keep language and concepts accessible for [Grade Level] students. Format: show the 4 items clearly, then list at least one valid justification for each.`
-        },
-        {
-          name: "The Answer is... (Backward Mapping)",
-          purpose: "Inquiry",
-          prompt: `Act as an experienced [Grade Level] math teacher. I want to use 'The Answer is...' routine for [Standard] in a [Curriculum] classroom. The answer is [Insert Answer]. Generate 5 different questions or scenarios that all lead to this answer, ordered from least to most complex: (1) Basic computation, (2) Procedural with one step of reasoning, (3) Applied context, (4) Multi-step real-world problem, (5) Open-ended or conceptual question. Each question must genuinely produce [Insert Answer] as its result — verify this before presenting. Use vocabulary aligned to [Grade Level] and [Curriculum].`
-        }
-      ]
-    },
-    {
-      number: "Group 2",
-      title: "Conceptual Depth & Analysis",
-      activities: [
-        {
-          name: "Always, Sometimes, Never",
-          purpose: "Conceptual Depth",
-          prompt: `Act as an experienced [Grade Level] math specialist. Generate 5 'Always, Sometimes, or Never' statements for [Standard], aligned to [Curriculum] vocabulary and appropriate for [Grade Level] students. For each statement provide: (1) the correct decision (Always, Sometimes, or Never), (2) the mathematical evidence students must articulate, and (3) at least one concrete counter-example for any statement that is 'Sometimes' or 'Never.' Design statements to target the most common misconceptions at this grade level. Avoid trivially obvious statements — each should require genuine mathematical reasoning to evaluate.`
-        },
-        {
-          name: "Categories",
-          purpose: "Conceptual Connection",
-          prompt: `Act as an experienced [Grade Level] math specialist. Generate a set of 16 'Categories' cards for [Standard], aligned to [Curriculum] and appropriate for [Grade Level] students. Include a purposeful mix of representations: vocabulary terms, equations, graphs, and tables. Requirements: (1) Every card must fit cleanly into at least one valid category. (2) Include at least 2 cards that could belong to more than one category to spark discussion. (3) Provide a Teacher Cheat Sheet listing at least 3 distinct ways the full set of 16 cards could be mathematically categorized (e.g., by property, by representation type, by value range), with the card assignments for each grouping clearly listed.`
-        },
-        {
-          name: "Four Corners",
-          purpose: "Multiple Representations",
-          prompt: `Act as an experienced [Grade Level] math specialist. I am using the NSD Four Corners template for [Topic], aligned to [Curriculum]. Provide 4 distinct starting scenarios — each set in a different real-world context — that can each be independently expressed in all four representations: Graph, Table, Equation, and Context. For each of the 4 scenarios, generate the complete information needed to fill all four corners so they are mathematically consistent with each other. Verify that each representation within a scenario is equivalent before presenting. Label each scenario clearly (Scenario 1–4) with its four corners.`
-        },
-        {
-          name: "Gallery Walk",
-          purpose: "Critique & Analysis",
-          prompt: `Act as an experienced [Grade Level] math specialist. Generate 6 'exhibits' for a math Gallery Walk focused on [Topic], aligned to [Curriculum]. Each exhibit should show a fictional student's written work on a problem related to [Standard]. Requirements: (1) At least 4 exhibits must contain a common misconception or error. (2) At least 2 exhibits should show fully correct work as a contrast. (3) Errors must be realistic mistakes students at [Grade Level] actually make — not careless arithmetic. Provide: the 6 student work samples formatted clearly, and a Teacher Key identifying each misconception by name, explaining why students make it, and showing the correct solution.`
-        },
-        {
-          name: "Two Truths & a Lie",
-          purpose: "Error Analysis",
-          prompt: `Act as an experienced [Grade Level] math specialist. Create a 'Two Truths and a Lie' set for [Topic], aligned to [Curriculum] and appropriate for [Grade Level] students. Provide two mathematically correct statements and one 'Lie' based on a common student misconception for [Standard]. Requirements: (1) The Lie must be plausible — something students would genuinely believe, not an obvious error. (2) Provide a Proof section explaining precisely why the Lie is false, including the correct mathematics. (3) Provide a 'Why Students Believe It' explanation so teachers can anticipate and address the misconception during discussion. Use vocabulary consistent with [Curriculum].`
-        }
-      ]
-    },
-    {
-      number: "Group 3",
-      title: "Differentiated Practice & Performance",
-      activities: [
-        {
-          name: "Stations",
-          purpose: "Differentiation",
-          prompt: `Act as a [Grade Level] math specialist. Create two sets of Station Cards for [Topic] aligned to [Standard] and [Curriculum]. Set 1 (Cards 1–8): 'Recall and Reproduce' — procedural problems accessible to all students. Set 2 (Cards A–H): 'Strategic Thinking' — problems requiring application, analysis, or multi-step reasoning. Requirements: (1) Each card should be completable in 3–5 minutes. (2) Cards within each set should increase slightly in difficulty. (3) Provide a Peek Sheet listing all 16 answers in order (1–8, then A–H) so students can self-check. (4) Provide a Teacher Answer Key with full worked solutions for all 16 cards.`
-        },
-        {
-          name: "Climb the Ladder",
-          purpose: "Tiered Progression",
-          prompt: `Act as a [Grade Level] math specialist. Create four 'Ladders' for [Standard], aligned to [Curriculum], that increase in cognitive demand across DOK levels. Each ladder contains 5 problems. Ladder 1: DOK 1 — basic recall and procedural skill. Ladder 2: DOK 2 — skill with some conceptual reasoning. Ladder 3: DOK 2–3 — multi-step or applied problems. Ladder 4: DOK 3–4 — extended thinking, justification, or open-ended tasks. Requirements: (1) All four ladders should address the same standard from different angles. (2) Problems should be appropriate for [Grade Level] students. (3) Provide a complete answer key for all 20 problems, with worked solutions for Ladders 3 and 4.`
-        },
-        {
-          name: "Masterpiece",
-          purpose: "Performance Task",
-          prompt: `Act as a [Grade Level] math specialist. Create a Math Masterpiece scenario for [Standard], aligned to [Curriculum], with 5 sequential task cards. Card 1: Frame a real-world situation with a low-entry access point (DOK 1). Cards 2–4: Build on the same scenario with increasing complexity (DOK 2, then DOK 3). Card 5: An Extended Thinking task rooted in the same scenario that requires justification, generalization, or creative application (DOK 4). Requirements: (1) All 5 cards must build on the same scenario — a student who skips a card should still be able to read the context. (2) Use vocabulary and contexts appropriate for [Grade Level] and [Curriculum]. (3) Provide a complete answer key with worked solutions for all 5 cards.`
-        },
-        {
-          name: "Task Rotations",
-          purpose: "Strategic Thinking",
-          prompt: `Act as a [Grade Level] math specialist. Create 4 multi-step 'Strategic Thinking' task cards for [Standard], aligned to [Curriculum]. Each card applies the concept to a distinct real-world scenario. Requirements: (1) All 4 tasks should be at DOK 2–3 level — no pure procedural problems. (2) Each task should be completable in 8–12 minutes by a [Grade Level] student working independently. (3) Tasks should use varied real-world contexts (e.g., not all finance or all science). (4) Format each as a clearly labeled Task Card (Task 1–4) with all necessary information self-contained on the card. (5) Provide a Teacher Answer Key with full worked solutions for all 4 tasks.`
-        },
-        {
-          name: "Target Practice",
-          purpose: "Differentiation",
-          prompt: `Act as a [Grade Level] math specialist. Create a 'Target Practice' problem set for [Standard], aligned to [Curriculum]. Generate 3 tiers of problems: Outer Ring (3 problems): Procedural — direct application of the skill with minimal context. Middle Ring (3 problems): Application — multi-step or contextual problems requiring interpretation. Bullseye (3 problems): Extension/DOK 3 — problems requiring justification, generalization, or non-routine thinking. Requirements: (1) All 9 problems must address the same standard. (2) Problems should be appropriate for [Grade Level] students. (3) The difficulty increase between rings should be meaningful, not just cosmetic. (4) Provide a full answer key with worked solutions for all 9 problems.`
-        }
-      ]
-    },
-    {
-      number: "Group 4",
-      title: "Fluency & Collaborative Review",
-      activities: [
-        {
-          name: "MATHO",
-          purpose: "Procedural Fluency",
-          prompt: `Act as a [Grade Level] math teacher. Generate [9, 16, or 24] unique procedural math problems for [Standard], aligned to [Curriculum] and appropriate for [Grade Level] students. Requirements: (1) Every problem must have a unique answer — verify there are no duplicate answers before presenting. (2) All answers must be concise enough to fit in a small card cell: single integers, simple fractions, or short expressions of no more than 4 characters. (3) Avoid answers that are decimals longer than one place or expressions that would be ambiguous when written briefly. Present the problems as a numbered worksheet list. Then provide the answer list in random order (not matching problem order) for the teacher to call out during the game.`
-        },
-        {
-          name: "Relay",
-          purpose: "Collaborative Review",
-          prompt: `Act as a [Grade Level] math specialist. Create two sets of Relay Cards for [Standard], aligned to [Curriculum]. Set 1 (Cards 1–8): Increasing difficulty from basic procedural to proficiency-level application. Set 2 (Cards A–H): Challenge-level problems requiring strategic thinking and application, suitable for the 'Coach and Mathlete' format where one partner coaches the other. Requirements: (1) Cards within each set must increase in difficulty — do not randomize order. (2) All problems must be appropriate for [Grade Level] and use [Curriculum] vocabulary. (3) Provide a complete numbered answer key for both sets (1–8, then A–H) with worked solutions.`
-        },
-        {
-          name: "Partner Math",
-          purpose: "Self-Checking",
-          prompt: `Act as a [Grade Level] math specialist. Generate 10 procedural problem pairs (Tasks A–J) for [Standard], aligned to [Curriculum]. In each pair, Partner 1 and Partner 2 receive different problems but must arrive at identical answers — this is the self-checking mechanism. Also provide 2 Challenge Problem pairs (Tasks K–L) at a higher DOK level. Requirements: (1) Before presenting, verify that Partner 1 and Partner 2 answers match exactly for every task pair — this is critical to the activity working correctly. (2) Problems must be appropriate for [Grade Level] students. (3) Provide a complete answer key listing the shared answer for each task pair (A–L).`
-        },
-        {
-          name: "Ticket Time",
-          purpose: "Center Practice",
-          prompt: `Act as a [Grade Level] math specialist. Generate content for a 'Ticket Time' center activity for [Standard], aligned to [Curriculum]. Create 10 distinct, self-contained math problems appropriate for [Grade Level] students that can each be solved independently in 2–4 minutes. Requirements: (1) Problems should vary in format (computation, short answer, interpret a graph or table, explain reasoning) — do not make all 10 the same type. (2) Each problem should be completable without reference to the others. (3) Difficulty should be consistent — these are practice problems, not a progression. Format as 'Ticket 1' through 'Ticket 10.' Provide a 'Peek Sheet' listing the answer for each ticket in order.`
-        },
-        {
-          name: "WANTED",
-          purpose: "Logic & Properties",
-          prompt: `Act as a [Grade Level] math specialist. Create a 'WANTED' poster activity for [Topic], aligned to [Curriculum] and [Standard]. Provide 10–12 clues that collectively identify a specific mathematical target (a value, function, shape, or concept). Requirements: (1) Specify the reveal order from least to most revealing — early clues should be broad enough that multiple targets are still possible; later clues should narrow it down to one. (2) Clearly identify which clues are redundant (i.e., add no new information once prior clues are known) so the teacher can choose to omit them. (3) Use vocabulary appropriate for [Grade Level] and [Curriculum]. (4) State the Target answer clearly. (5) Provide a Teacher Note explaining the mathematical reasoning behind each clue.`
-        }
-      ]
-    }
-  ]
-};
-
-function getFields() {
-  return {
-    '[Grade Level]': document.getElementById('gradeLevel').value.trim(),
-    '[Standard]': document.getElementById('standard').value.trim(),
-    '[Topic]': document.getElementById('topic').value.trim(),
-    '[Curriculum]': document.getElementById('curriculum').value.trim(),
-  };
-}
-
-function renderPrompt(rawPrompt) {
-  const fields = getFields();
-  let html = rawPrompt;
-  // Escape HTML first
-  html = html.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  // Highlight the MATHO choice field specially (before other replacements)
-  html = html.replace(/\[9, 16, or 24\]/g, '<span class="choice-field">[9, 16, or 24 — choose one]</span>');
-  // Replace standard fields
-  Object.entries(fields).forEach(([key, val]) => {
-    const escaped = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    if (val) {
-      html = html.replace(new RegExp(escaped, 'g'),
-        `<span class="filled-field">${val}</span>`);
-    } else {
-      html = html.replace(new RegExp(escaped, 'g'),
-        `<span class="empty-field">${key}</span>`);
-    }
-  });
-  return html;
-}
-
-function getPlainPrompt(rawPrompt) {
-  const fields = getFields();
-  let text = rawPrompt;
-  Object.entries(fields).forEach(([key, val]) => {
-    if (val) text = text.split(key).join(val);
-  });
-  // Leave [9, 16, or 24] as-is for manual editing
-  return text;
-}
-
-function buildUI() {
-  const main = document.getElementById('main');
-  main.innerHTML = '';
-  data.groups.forEach(group => {
-    const section = document.createElement('section');
-    section.className = 'group';
-    section.innerHTML = `
-      <div class="group-header">
-        <span class="group-number">${group.number}</span>
-        <span class="group-title">${group.title}</span>
-      </div>
-    `;
-    group.activities.forEach((act, ai) => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.id = `card-${group.number.replace(' ','-')}-${ai}`;
-      card.innerHTML = `
-        <div class="card-header" onclick="toggleCard(this)">
-          <div class="card-header-left">
-            <span class="activity-name">${act.name}</span>
-            <span class="purpose-tag">${act.purpose}</span>
-          </div>
-          <span class="chevron">▼</span>
-        </div>
-        <div class="card-body">
-          <p class="prompt-label">AI Prompt</p>
-          <div class="prompt-box" id="prompt-${group.number.replace(' ','-')}-${ai}">${renderPrompt(act.prompt)}</div>
-          <button class="copy-btn" onclick="copyPrompt(this, '${group.number.replace(' ','-')}-${ai}', \`${act.prompt.replace(/`/g,'\\`')}\`)">
-            ⧉ Copy prompt
-          </button>
-        </div>
-      `;
-      section.appendChild(card);
-    });
-    main.appendChild(section);
-  });
-}
-
-function toggleCard(header) {
-  header.parentElement.classList.toggle('open');
-}
-
-function updatePrompts() {
-  data.groups.forEach((group, gi) => {
-    group.activities.forEach((act, ai) => {
-      const el = document.getElementById(`prompt-${group.number.replace(' ','-')}-${ai}`);
-      if (el) el.innerHTML = renderPrompt(act.prompt);
-    });
-  });
-}
-
-function clearFields() {
-  ['gradeLevel','standard','topic','curriculum'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
-  updatePrompts();
-}
-
-function copyPrompt(btn, id, rawPrompt) {
-  const text = getPlainPrompt(rawPrompt);
-  navigator.clipboard.writeText(text).then(() => {
-    btn.textContent = '✓ Copied!';
-    btn.classList.add('copied');
-    setTimeout(() => {
-      btn.innerHTML = '⧉ Copy prompt';
-      btn.classList.remove('copied');
-    }, 2000);
-  });
-}
-
-buildUI();
-</script>
 </body>
 </html>
