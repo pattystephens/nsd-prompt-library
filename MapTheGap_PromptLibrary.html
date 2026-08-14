@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Prompt Library — Map the Gap</title>
+  <style>
+    :root {
+      --navy:      #0D2B45;
+      --teal:      #028090;
+      --seafoam:   #00A896;
+      --mint:      #02C39A;
+      --accent:    #F4A261;
+      --off-white: #F0F9FB;
+      --light-gray:#E8F4F6;
+      --dark-card: #0A2035;
+      --mid-teal:  #016A79;
+      --text-dark: #1A2E3B;
+      --text-mid:  #3D6B7A;
+      --white:     #FFFFFF;
+      --gold-light:#FEF3DC;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--off-white);
+      color: var(--text-dark);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--navy);
+      padding: 2rem 2.5rem 1.75rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .header-eyebrow {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--navy);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 18px;
+      border-radius: 99px;
+      margin-bottom: 0.65rem;
+    }
+    .header-title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 0.4rem;
+    }
+    .header-subtitle {
+      font-size: 1rem;
+      color: var(--seafoam);
+      font-weight: 400;
+    }
+
+    /* ── Layout ── */
+    .layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 32px 64px;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* ── Input panel ── */
+    .input-panel {
+      background: #1A4F5E;
+      border-radius: 14px;
+      border: 1px solid #134050;
+      box-shadow: 0 2px 12px rgba(13,43,69,0.08);
+      position: sticky;
+      top: 140px;
+      overflow: hidden;
+    }
+    .input-panel-header {
+      background: var(--teal);
+      padding: 16px 20px;
+    }
+    .input-panel-header h2 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.3px;
+    }
+    .input-panel-header p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.75);
+      margin-top: 3px;
+    }
+    .input-fields {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .field-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--mint);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .field-group input,
+    .field-group textarea,
+    .field-group select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid var(--light-gray);
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--text-dark);
+      background: var(--white);
+      font-family: inherit;
+      transition: border-color 0.15s;
+      resize: vertical;
+    }
+    .field-group textarea { min-height: 72px; }
+    .field-group input:focus,
+    .field-group select:focus,
+    .field-group textarea:focus {
+      outline: none;
+      border-color: var(--mint);
+      background: var(--white);
+    }
+    .clear-btn {
+      margin: 0 20px 20px;
+      background: transparent;
+      color: rgba(255,255,255,0.6);
+      border: 1.5px solid rgba(255,255,255,0.25);
+      border-radius: 6px;
+      padding: 0.45rem 1rem;
+      font-size: 0.82rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+      width: calc(100% - 40px);
+    }
+    .clear-btn:hover { border-color: var(--mint); color: var(--mint); }
+
+    .input-tip {
+      margin: 0 20px 20px;
+      background: var(--white);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 10px 12px;
+      font-size: 12px;
+      color: var(--text-mid);
+      line-height: 1.5;
+    }
+    .input-tip strong { color: var(--navy); }
+
+    /* ── Prompt cards ── */
+    .prompts-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .card {
+      background: var(--white);
+      border-radius: 14px;
+      border: 1px solid var(--light-gray);
+      box-shadow: 0 2px 12px rgba(13,43,69,0.07);
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .card:hover { box-shadow: 0 4px 24px rgba(13,43,69,0.13); }
+
+    .card-header {
+      padding: 18px 24px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      border-bottom: 1px solid var(--light-gray);
+    }
+    .card-number {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--white);
+    }
+    .card-1 .card-number { background: var(--teal); }
+    .card-2 .card-number { background: var(--seafoam); }
+    .card-3 .card-number { background: var(--navy); }
+    .card-4 .card-number { background: var(--mid-teal); }
+
+    .card-title-group { flex: 1; }
+    .card-title-group h3 {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.2px;
+    }
+    .card-title-group p {
+      font-size: 13px;
+      color: var(--text-mid);
+      margin-top: 3px;
+      line-height: 1.4;
+    }
+    .outcome-tag {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .card-1 .outcome-tag { background: rgba(2,128,144,0.12);  color: var(--teal); }
+    .card-2 .outcome-tag { background: rgba(0,168,150,0.12);  color: var(--seafoam); }
+    .card-3 .outcome-tag { background: rgba(13,43,69,0.10);   color: var(--navy); }
+    .card-4 .outcome-tag { background: rgba(1,106,121,0.10);  color: var(--mid-teal); }
+
+    .card-body { padding: 0 24px 24px; }
+
+    /* ── Prompt area — style from engaging-math-activities ── */
+    .prompt-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-mid);
+      margin: 0.9rem 0 0.4rem;
+    }
+    .prompt-box {
+      background: var(--off-white);
+      border: 1.5px solid var(--light-gray);
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--text-dark);
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+    .prompt-box .filled-field {
+      background: var(--gold-light);
+      color: var(--teal);
+      font-weight: 600;
+      border-radius: 3px;
+      padding: 0 2px;
+    }
+    .prompt-box .empty-field {
+      background: #FFF0D6;
+      color: #B07000;
+      font-weight: 600;
+      border-radius: 3px;
+      padding: 0 2px;
+      border-bottom: 1.5px dashed var(--accent);
+    }
+
+    /* ── Copy button — from engaging-math-activities ── */
+    .copy-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.65rem;
+      background: var(--teal);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+    .copy-btn:hover { background: var(--mid-teal); }
+    .copy-btn.copied { background: #2E7D32; }
+
+    /* ── Tip box ── */
+    .tip-box {
+      margin-top: 14px;
+      background: var(--off-white);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--text-mid);
+      line-height: 1.5;
+    }
+    .tip-box strong { color: var(--navy); }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      font-size: 12px;
+      padding: 20px;
+    }
+    footer strong { color: var(--mint); }
+
+    /* ── Responsive ── */
+    @media (max-width: 800px) {
+      .layout { grid-template-columns: 1fr; }
+      .input-panel { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-eyebrow">Northshore School District · K–12 Math · 2 STEM Clock Hours</div>
+    <div class="header-title">Map the Gap — AI Prompt Library</div>
+    <div class="header-subtitle">August 20, 2026 · Facilitator: Patty Stephens, NSD Math TOSA</div>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="input-panel">
+    <div class="input-panel-header">
+      <h2>Your Information</h2>
+      <p>Fill in once — all prompts update automatically</p>
+    </div>
+    <div class="input-fields">
+      <div class="field-group">
+        <label>Grade Level</label>
+        <select id="grade">
+          <option value="">Select your grade…</option>
+          <option>Kindergarten</option>
+          <option>1st grade</option>
+          <option>2nd grade</option>
+          <option>3rd grade</option>
+          <option>4th grade</option>
+          <option>5th grade</option>
+          <option>6th grade</option>
+          <option>7th grade</option>
+          <option>8th grade</option>
+          <option>9th grade</option>
+          <option>10th grade</option>
+          <option>11th grade</option>
+          <option>12th grade</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label>Concept or Standard</label>
+        <textarea id="concept" placeholder="e.g. multiplying fractions, solving two-step equations, place value…"></textarea>
+      </div>
+    </div>
+    <div class="input-tip">
+      <strong>💡 Tip:</strong> The more specific your concept, the better the output. "Multiplying fractions where one factor is less than 1" works better than just "fractions."
+    </div>
+    <button class="clear-btn" onclick="clearFields()">Clear fields</button>
+  </aside>
+
+  <!-- Prompt cards -->
+  <main class="prompts-panel">
+
+    <div class="card card-1">
+      <div class="card-header">
+        <div class="card-number">1</div>
+        <div class="card-title-group">
+          <h3>Hinge-Point Question</h3>
+          <p>A diagnostic multiple-choice question where each wrong answer reveals a specific student misconception</p>
+        </div>
+        <span class="outcome-tag">CONSTRUCT</span>
+      </div>
+      <div class="card-body">
+        <div class="prompt-label">AI Prompt — paste into any AI tool</div>
+        <div class="prompt-box" id="prompt-1"></div>
+        <button class="copy-btn" onclick="copyPrompt(this, 1)">⧉ Copy prompt</button>
+        <div class="tip-box">
+          <strong>After you get the output:</strong> Always verify the correct answer and solution work before using with students. If a distractor accidentally produces the correct answer, ask AI to revise the numbers.
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-2">
+      <div class="card-header">
+        <div class="card-number">2</div>
+        <div class="card-title-group">
+          <h3>Synthesis Exit Ticket</h3>
+          <p>Reveals whether students understand <em>why</em> something works — not just that it works</p>
+        </div>
+        <span class="outcome-tag">GENERATE</span>
+      </div>
+      <div class="card-body">
+        <div class="prompt-label">AI Prompt — paste into any AI tool</div>
+        <div class="prompt-box" id="prompt-2"></div>
+        <button class="copy-btn" onclick="copyPrompt(this, 2)">⧉ Copy prompt</button>
+        <div class="tip-box">
+          <strong>The 'teach it younger' frame</strong> forces genuine understanding — students can't fake it by restating a formula. Use the sample response as a scoring anchor when reviewing student work.
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-3">
+      <div class="card-header">
+        <div class="card-number">3</div>
+        <div class="card-title-group">
+          <h3>Vertical Story Prompt</h3>
+          <p>Traces your standard 2 grades below and 2 above — see the full arc of how this concept develops</p>
+        </div>
+        <span class="outcome-tag">ANALYZE</span>
+      </div>
+      <div class="card-body">
+        <div class="prompt-label">AI Prompt — paste into any AI tool</div>
+        <div class="prompt-box" id="prompt-3"></div>
+        <button class="copy-btn" onclick="copyPrompt(this, 3)">⧉ Copy prompt</button>
+        <div class="tip-box">
+          <strong>What AI gives you back:</strong> A grade-band map of the concept, the prerequisite gaps students most likely have, and what this standard needs to become by high school. Use Handout 3 to record your findings.
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-4">
+      <div class="card-header">
+        <div class="card-number">4</div>
+        <div class="card-title-group">
+          <h3>Diagnostic Check</h3>
+          <p>Confirms which prerequisite gaps from the Vertical Story actually exist in your students — before you teach</p>
+        </div>
+        <span class="outcome-tag">EVALUATE</span>
+      </div>
+      <div class="card-body">
+        <div class="prompt-label">AI Prompt — paste into any AI tool</div>
+        <div class="prompt-box" id="prompt-4"></div>
+        <button class="copy-btn" onclick="copyPrompt(this, 4)">⧉ Copy prompt</button>
+        <div class="tip-box">
+          <strong>Q1 is almost always the most revealing.</strong> Teachers often skip prerequisite checks assuming students arrived with prior knowledge — the Vertical Story shows exactly where that assumption breaks down. Use Handout 4 to record your three questions.
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  <strong>Map the Gap</strong> · Northshore School District · August 20, 2026 · AI Prompt Library
+</footer>
+
+<script>
+  const PROMPTS = {
+    1: (grade, concept) =>
+`Create a 4-choice Hinge-Point Question for [CONCEPT] at [GRADE] level. Choose numbers or values carefully so that each wrong answer is distinct, plausible, and not too large or small to be believable.
+
+For each wrong answer, provide:
+  (1) The specific misconception it targets
+  (2) The student error — what did the student do?
+  (3) The student reasoning — what does this student believe to be true?
+
+Include a verified answer key with full solution work for the correct answer, so I can check it before using it with students.`
+      .replace('[GRADE]', grade || '[GRADE]')
+      .replace('[CONCEPT]', concept || '[CONCEPT]'),
+
+    2: (grade, concept) =>
+`Write a Synthesis exit ticket for [CONCEPT] at [GRADE] level that asks students to explain the rule or procedure as if they are teaching it to a student one grade below them.
+
+Include:
+  (1) A sentence stem to help students get started
+  (2) A sample student response at the proficiency level — one that demonstrates genuine conceptual understanding, not just a restatement of the procedure`
+      .replace('[GRADE]', grade || '[GRADE]')
+      .replace('[CONCEPT]', concept || '[CONCEPT]'),
+
+    3: (grade, concept) =>
+`I teach [GRADE]. My standard is: [CONCEPT].
+
+Show me what this concept looks like 2 grade levels below mine and 2 grade levels above mine. For each grade level, describe:
+  (1) What students should already understand
+  (2) The key task or question at that level
+  (3) The most common misconception at that grade
+
+Then tell me: what prior knowledge are my students most likely missing, and what does this concept need to become by the time they leave high school?`
+      .replace('[GRADE]', grade || '[GRADE]')
+      .replace('[CONCEPT]', concept || '[CONCEPT]'),
+
+    4: (grade, concept) =>
+`Generate a 3-question diagnostic check for [CONCEPT] at [GRADE] level.
+
+Include:
+  (1) A question that tests the prerequisite knowledge students should have from 2 grades below — this is your gap-finder
+  (2) A question at grade level — this is your readiness baseline
+  (3) An extension question for students who are already ready to move further
+
+For each question, name the misconception it would surface if a student answers incorrectly.`
+      .replace('[GRADE]', grade || '[GRADE]')
+      .replace('[CONCEPT]', concept || '[CONCEPT]'),
+  };
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function renderPrompt(num) {
+    const grade   = document.getElementById('grade').value.trim();
+    const concept = document.getElementById('concept').value.trim();
+    const raw     = PROMPTS[num](grade, concept);
+    const el      = document.getElementById(`prompt-${num}`);
+    let html = escHtml(raw);
+    if (grade) {
+      html = html.split(escHtml(grade)).join(`<span class="filled-field">${escHtml(grade)}</span>`);
+    } else {
+      html = html.replace(/\[GRADE\]/g, `<span class="empty-field">[GRADE]</span>`);
+    }
+    if (concept) {
+      html = html.split(escHtml(concept)).join(`<span class="filled-field">${escHtml(concept)}</span>`);
+    } else {
+      html = html.replace(/\[CONCEPT\]/g, `<span class="empty-field">[CONCEPT]</span>`);
+    }
+    el.innerHTML = html;
+  }
+
+  function renderAll() { [1,2,3,4].forEach(renderPrompt); }
+
+  function copyPrompt(btn, num) {
+    const grade   = document.getElementById('grade').value.trim();
+    const concept = document.getElementById('concept').value.trim();
+    navigator.clipboard.writeText(PROMPTS[num](grade, concept)).then(() => {
+      btn.textContent = '✓ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.innerHTML = '⧉ Copy prompt';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  function clearFields() {
+    document.getElementById('grade').value = '';
+    document.getElementById('concept').value = '';
+    renderAll();
+  }
+
+  document.getElementById('grade').addEventListener('change', renderAll);
+  document.getElementById('concept').addEventListener('input', renderAll);
+  renderAll();
+</script>
+</body>
+</html>
