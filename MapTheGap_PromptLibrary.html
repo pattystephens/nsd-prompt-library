@@ -467,6 +467,12 @@
     1: (grade, concept) =>
 `Create a 4-choice Hinge-Point Question for [CONCEPT] at [GRADE] level. Choose numbers or values carefully so that each wrong answer is distinct, plausible, and not too large or small to be believable.
 
+The question must be self-contained — no graphs, diagrams, or number lines required to answer it.
+
+Format the question as a direct problem, not a 'which statement is true' format.
+
+Each distractor must represent a misconception commonly observed in students at this grade level — do not include distractors that represent unlikely or rare errors.
+
 For each wrong answer, provide:
   (1) The specific misconception it targets
   (2) The student error — what did the student do?
@@ -481,7 +487,9 @@ Include a verified answer key with full solution work for the correct answer, so
 
 Include:
   (1) A sentence stem to help students get started
-  (2) A sample student response at the proficiency level — one that demonstrates genuine conceptual understanding, not just a restatement of the procedure`
+  (2) A sample student response at the proficiency level — one that demonstrates genuine conceptual understanding, not just a restatement of the procedure
+
+The sample response should prioritize conceptual reasoning over procedural shortcuts or rules — it should explain the 'why,' not just the 'how.'`
       .replace('[GRADE]', grade || '[GRADE]')
       .replace('[CONCEPT]', concept || '[CONCEPT]'),
 
@@ -496,7 +504,7 @@ Base the progression on the actual mathematics standards, not just general conce
   3. Give one representative task or question that illustrates the expected level of thinking.
   4. Identify one common misconception or unfinished understanding that could interfere with later learning.
 
-If there is not a direct standards progression at a particular grade level, say so rather than inventing a connection. Clearly distinguish between a progression explicitly supported by the standards and a broader mathematical connection you are inferring.
+If there is not a direct standards progression at a particular grade level, say so rather than inventing a connection. Clearly distinguish between a progression explicitly supported by the standards and a broader mathematical connection you are inferring. For any inferred connection, briefly explain the mathematical reasoning behind the inference so the teacher can evaluate whether it is appropriate for their context.
 
 Then identify:
   • Prerequisites to check: Which 2–3 understandings from earlier grades are most important for success with my current standard? Explain briefly why each is worth checking.
@@ -512,12 +520,14 @@ Important: Treat this analysis as a starting point for teacher review. Do not as
 `Generate a 4-question diagnostic check for [CONCEPT] at [GRADE] level.
 
 Include:
-  (1) A question targeting prerequisite knowledge from 2 grades below — the deepest gap-finder
+  (1) A question that tests the prerequisite knowledge students should have from 2 grades below — the deepest gap-finder
   (2) A question targeting prerequisite knowledge from 1 grade below — the proximal gap-finder
   (3) A question at grade level — the readiness baseline
   (4) An extension question for students who are already ready to move further
 
-For each question, name the misconception it would surface if a student answers incorrectly.`
+For each question, name the misconception it would surface if a student answers incorrectly.
+
+Questions should be answerable without extended writing — keep each question concise enough to serve as a quick pre-assessment, not a performance task.`
       .replace('[GRADE]', grade || '[GRADE]')
       .replace('[CONCEPT]', concept || '[CONCEPT]'),
   };
