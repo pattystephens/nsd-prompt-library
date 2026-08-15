@@ -441,7 +441,7 @@
         <div class="card-number">4</div>
         <div class="card-title-group">
           <h3>Diagnostic Check</h3>
-          <p>Confirms which prerequisite gaps from the Vertical Story actually exist in your students — before you teach</p>
+          <p>A 4-question diagnostic covering both prerequisite grade levels, grade level, and extension — confirms which gaps from the Vertical Story actually exist before you teach</p>
         </div>
         <span class="outcome-tag">EVALUATE</span>
       </div>
@@ -488,22 +488,34 @@ Include:
     3: (grade, concept) =>
 `I teach [GRADE]. My standard is: [CONCEPT].
 
-Show me what this concept looks like 2 grade levels below mine and 2 grade levels above mine. For each grade level, describe:
-  (1) What students should already understand
-  (2) The key task or question at that level
-  (3) The most common misconception at that grade
+Trace the development of this mathematical concept across five grade levels: my grade, the two grade levels immediately below it, and the two grade levels immediately above it.
 
-Then tell me: what prior knowledge are my students most likely missing, and what does this concept need to become by the time they leave high school?`
+Base the progression on the actual mathematics standards, not just general conceptual connections. For each grade level:
+  1. Identify the relevant standard(s) by code and briefly describe what they require.
+  2. Describe what students should understand or be able to do with this concept at that level.
+  3. Give one representative task or question that illustrates the expected level of thinking.
+  4. Identify one common misconception or unfinished understanding that could interfere with later learning.
+
+If there is not a direct standards progression at a particular grade level, say so rather than inventing a connection. Clearly distinguish between a progression explicitly supported by the standards and a broader mathematical connection you are inferring.
+
+Then identify:
+  • Prerequisites to check: Which 2–3 understandings from earlier grades are most important for success with my current standard? Explain briefly why each is worth checking.
+  • Where this is going: What later mathematics does this standard directly support? Identify the relevant later standard(s) when possible.
+
+Present the five-grade progression in a clear table so I can easily see how the mathematics develops from grade to grade.
+
+Important: Treat this analysis as a starting point for teacher review. Do not assume that my students have a prerequisite gap simply because it is important. Identify what is worth checking, and I will use student evidence to determine whether a gap actually exists.`
       .replace('[GRADE]', grade || '[GRADE]')
       .replace('[CONCEPT]', concept || '[CONCEPT]'),
 
     4: (grade, concept) =>
-`Generate a 3-question diagnostic check for [CONCEPT] at [GRADE] level.
+`Generate a 4-question diagnostic check for [CONCEPT] at [GRADE] level.
 
 Include:
-  (1) A question that tests the prerequisite knowledge students should have from 2 grades below — this is your gap-finder
-  (2) A question at grade level — this is your readiness baseline
-  (3) An extension question for students who are already ready to move further
+  (1) A question targeting prerequisite knowledge from 2 grades below — the deepest gap-finder
+  (2) A question targeting prerequisite knowledge from 1 grade below — the proximal gap-finder
+  (3) A question at grade level — the readiness baseline
+  (4) An extension question for students who are already ready to move further
 
 For each question, name the misconception it would surface if a student answers incorrectly.`
       .replace('[GRADE]', grade || '[GRADE]')
